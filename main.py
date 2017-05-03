@@ -1,17 +1,9 @@
-from __future__ import print_function
 import space
+import player
+import input
+import ui
+import map
 
-lSpaces =  [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-			
 spaces =   [[0, 0, 0, 0, 0],
 			[0, 1, 0, 0, 0],
 			[0, 0, 4, 2, 1],
@@ -20,16 +12,24 @@ spaces =   [[0, 0, 0, 0, 0],
 
 w, h = 5, 5
 
-# Create map
-map = [[space.Space() for x in xrange(w)] for y in xrange(h)]
-
-# Initialise spaces
-for i in xrange(w):
-	print()
-	for j in xrange(h):
-		#print(map[i][j].hasHole())
-		map[i][j].initialise(spaces[i][j])
-		print(2 if map[i][j].hasMonster() else 1 if map[i][j].hasHole() else 0, " ", end = "")
+# Setup
+board = map.Map(w, h)
+p = player.Player()	
 		
-while player.:
+# Initialisation
+board.initialise(spaces)
+	
+board.show(p)
+# Loop
+while p.getPos() != [2, 2]:
+	key = input.listenKey()
+	if key != "":
+		ui.cls()
+		if key == "esc":
+			break
+		if key in ["up", "left", "down", "right"]:
+			p.move(key)
+		key = ""
+	board.show(p)
+	
 	

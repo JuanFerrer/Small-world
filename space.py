@@ -48,7 +48,7 @@ class Space:
 		self._hasGold = flags[1]
 		self._hasMonster = flags[2]
 		self._hasHole = flags[3]
-		checkNear()
+		#checkNear()
 	
 	def isStart(self):
 		return self._isStart == 1
@@ -61,7 +61,16 @@ class Space:
 		
 	def hasHole(self):
 		return self._hasHole == 1
-	
+		
+	def getImage(self):
+		if self.hasMonster():
+			return "M"
+		elif self.hasHole():
+			return "O"
+		elif self.hasGold():
+			return "#"
+		else:
+			return " "
 	# def enter(self):
 	# 	for action in actions:
 	# 		if action.isOnEnter():
