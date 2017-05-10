@@ -5,16 +5,12 @@ import ui
 import map
 
 import random
-
-spaces =   [[0, 0, 0, 0, 0],
-			[0, 1, 0, 8, 0],
-			[0, 0, 4, 2, 1],
-			[0, 2, 1, 0, 0],
-			[0, 0, 0, 0, 0]]
+w, h = 10, 10
+spaces =   [[space.Space() for i in xrange(w)] for j in xrange(h)]
 			
 goal = [0, 0]
 			
-w, h = 5, 5
+
 
 monsters = 2
 holes = 3
@@ -49,7 +45,7 @@ p = player.Player()
 		
 # Initialisation
 board.initialise(spaces)
-p.setPos(board)
+p.setPos(board.getStart())
 	
 board.show(p)
 # Loop
@@ -63,5 +59,6 @@ while p.getPos() != goal:
 			p.move(key)
 		key = ""
 	board.show(p)
+	board.checkNear(p.getPos())
 	
 	

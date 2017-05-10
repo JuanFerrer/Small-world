@@ -3,16 +3,15 @@ class Player:
 		self._pos = [0, 0]
 		self.knownPos = []
 	
-	def setPos(self, board):
-		for i in xrange(board.getWidth()):
-			for j in xrange(board.getHeight()):
-				if board.getAt(i, j).isStart():
-					self._pos = [i, j]
-					return
+	# Set starting position
+	def setPos(self, pos):
+		self._pos = [pos[0], pos[1]]
 	
+	# Accessor
 	def getPos(self):
 		return self._pos
 	
+	# Move player in the specified direction. Can't move through diagonals
 	def move(self, dir):
 		if self._pos not in self.knownPos:
 			self.knownPos.append(self._pos)
@@ -27,3 +26,5 @@ class Player:
 			self._pos = [newPos[0], newPos[1] + 1]
 		elif dir == "left" and self._pos[1] > 0:	
 			self._pos = [newPos[0], newPos[1] - 1]
+			
+		
