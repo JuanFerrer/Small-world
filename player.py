@@ -20,9 +20,9 @@ class Player:
 			
 		if dir == "up" and self._pos[0] > 0:
 			self._pos = [newPos[0] - 1, newPos[1]]
-		elif dir == "down" and self._pos[0] < 4:
+		elif dir == "down" and self._pos[0] < 9:
 			self._pos = [newPos[0] + 1, newPos[1]]
-		elif dir == "right" and self._pos[1] < 4:
+		elif dir == "right" and self._pos[1] < 9:
 			self._pos = [newPos[0], newPos[1] + 1]
 		elif dir == "left" and self._pos[1] > 0:	
 			self._pos = [newPos[0], newPos[1] - 1]

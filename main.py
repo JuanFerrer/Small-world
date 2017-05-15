@@ -5,39 +5,20 @@ import ui
 import map
 
 import random
-w, h = 10, 10
-spaces =   [[space.Space() for i in xrange(w)] for j in xrange(h)]
-			
-goal = [0, 0]
-			
+w, h = 5, 5
+spaces = [[0 for i in range(w)] for j in range(h)]
 
+monsters = w / 3
+holes = w / 2
 
-monsters = 2
-holes = 3
-
-mUsed = 0 # Monsters used
-hUsed = 0 # Holes used
-
-for i in xrange(w):
-	for j in xrange(h):
-		if random.randint(0, 1) == 1: # Using special square			
-			makeHole = random.randint(0, 1)
-			if makeHole == 1 and hUsed <= holes:
-				spaces[i][j] = 1
-				hUsed += 1
-			elif makeHole == 0 and mUsed <= monsters:
-				spaces[i][j] = 2
-				mUsed += 1
-			else:
-				spaces[i][j] = 0
-		else:
-			spaces[i][j] = 0
-
-goal = [random.randint(0, w - 1), random.randint(0, h - 1)];
+for i in range(holes):		#Spawn holes
+	spaces[random.randint(1, w - 2)][random.randint(1, h - 2)] = 1
+for i in range(monsters):	# Spawn monsters
+	spaces[random.randint(1, w - 2)][random.randint(1, h - 2)] = 2
+goal = [random.randint(0, w - 1), random.randint(0, h - 1)]
 spaces[goal[0]][goal[1]] = 4
-spaces[random.randint(0, w - 1)][random.randint(0, h - 1)] = 8
-			
-			
+start = [random.randint(0, w - 1), random.randint(0, h - 1)] # Or should it be [0, 0]?
+spaces[start[0]][start[1]] = 8			
 
 # Setup
 board = map.Map(w, h)
@@ -48,6 +29,7 @@ board.initialise(spaces)
 p.setPos(board.getStart())
 	
 board.show(p)
+
 # Loop
 while p.getPos() != goal:
 	key = input.listenKey()

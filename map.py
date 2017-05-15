@@ -3,7 +3,7 @@ import space
 
 class Map:
 	def __init__(self, w, h):
-		self._table = [[space.Space() for x in xrange(w)] for y in xrange(h)]
+		self._table = [[space.Space() for x in range(w)] for y in range(h)]
 		self._width = w
 		self._height = h
 	
@@ -17,8 +17,8 @@ class Map:
 	
 	# Initialise each space
 	def initialise(self, lists):
-		for i in xrange(self._width):
-			for j in xrange(self._height):
+		for i in range(self._width):
+			for j in range(self._height):
 				self._table[i][j].initialise(lists[i][j])
 	
 	# Accessor
@@ -30,15 +30,15 @@ class Map:
 		
 	# Get the starting position
 	def getStart(self):
-		for i in xrange(self._width):
-			for j in xrange(self._height):
+		for i in range(self._width):
+			for j in range(self._height):
 				if self._table[i][j].isStart():
 					return [i, j]
 	
 	# Print board
 	def show(self, p):
-		for i in xrange(self._width):
-			for j in xrange(self._height):
+		for i in range(self._width):
+			for j in range(self._height):
 				if p.getPos() == [i, j]:
 					print('X', ' ', end = '')
 				else:
@@ -66,4 +66,4 @@ class Map:
 		   self.getAt(e).hasHole() or \
 		   self.getAt(s).hasHole() or \
 		   self.getAt(w).hasHole():
-			print("A gentle breeze brushes your hair...")
+			print("A suspicious breeze brushes your hair...")

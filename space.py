@@ -40,7 +40,7 @@ def binary(num, length = 4):
 # Each of the grid spaces
 class Space:
 	def __init__(self):
-		type = 0
+		self.initialise(0)
 		
 	def initialise(self, type):
 		flags = binary(type, 4)
