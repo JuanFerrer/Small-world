@@ -44,26 +44,27 @@ class Map:
 				else:
 					print(self._table[i][j].getImage() if [i, j] in p.knownPos else '-', ' ', end='')
 			print()
-	
-	# Check squares around the player and print messages when appropriate
-	#
-	#	[-1,-1 ] [-1, 0 ] [-1, 1 ]
-	#	[ 0,-1 ] [ 0, 0 ] [ 0, 1 ]
-	#	[ 1,-1 ] [ 1, 0 ] [ 1, 1 ]
-	def checkNear(self, pos):
+
+	# Get a list with all adjacent squares. Diagonals don't count as adjacent
+	def getAdjacentTo(self, pos):
 		n = [pos[0] - 1, pos[1]] if pos[0] > 0 else [pos[0] - 1, pos[1]] #s
 		e = [pos[0], pos[1] + 1] if pos[1] < self._width - 1 else [pos[0], pos[1] - 1] #w
 		s = [pos[0] + 1, pos[1]] if pos[0] < self._height - 1 else n
 		w = [pos[0], pos[1] - 1] if pos[1] > 0 else e
+
+		return [n, e, s, w]
+
 	
-		if self.getAt(n).hasMonster() or \
-		   self.getAt(e).hasMonster() or \
-		   self.getAt(s).hasMonster() or \
-		   self.getAt(w).hasMonster():
+	# Check squares around the player and print messages when appropriate
+	#
+	#	[ N/A  ] [-1, 0 ] [  N/A ]
+	#	[ 0,-1 ] [ 0, 0 ] [ 0, 1 ]
+	#	[ N/A  ] [ 1, 0 ] [  N/A ]
+	def checkNear(self, pos):
+		adjacentSquares = self.getAdjacentTo(pos)
+	
+		if any(self.getAt(dir).hasMonster() for dir in adjacentSquares):
 			print("A stench fills your lungs...")
 			
-		if self.getAt(n).hasHole() or \
-		   self.getAt(e).hasHole() or \
-		   self.getAt(s).hasHole() or \
-		   self.getAt(w).hasHole():
-			print("A suspicious breeze brushes your hair...")
+		if any(self.getAt(dir).hasHole() for dir in adjacentSquares):
+		 	print("A suspicious breeze brushes your hair...")

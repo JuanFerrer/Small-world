@@ -26,5 +26,4 @@ class Player:
 			self._pos = [newPos[0], newPos[1] + 1]
 		elif dir == "left" and self._pos[1] > 0:	
 			self._pos = [newPos[0], newPos[1] - 1]
-			
-		
+	

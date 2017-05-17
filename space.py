@@ -80,4 +80,4 @@ class Space:
 	# 	for action in actions:
 	# 		if action.isOnExit():
 	# 			action.execute()
-		
+	

@@ -5,11 +5,11 @@ import ui
 import map
 
 import random
-w, h = 5, 5
+w, h = 10, 10
 spaces = [[0 for i in range(w)] for j in range(h)]
 
-monsters = w / 3
-holes = w / 2
+monsters = int(w / 3)
+holes = int(w / 2)
 
 for i in range(holes):		#Spawn holes
 	spaces[random.randint(1, w - 2)][random.randint(1, h - 2)] = 1
@@ -42,5 +42,4 @@ while p.getPos() != goal:
 		key = ""
 	board.show(p)
 	board.checkNear(p.getPos())
-	
 	
