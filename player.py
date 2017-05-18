@@ -1,3 +1,5 @@
+import input
+
 class Player:
 	def __init__(self):
 		self._pos = [0, 0]
@@ -12,7 +14,11 @@ class Player:
 		return self._pos
 	
 	# Move player in the specified direction. Can't move through diagonals
-	def move(self, dir):
+	def move(self, board):
+		dir = input.getPlayerMove()
+		self.makeMove(dir)
+
+	def makeMove(self, dir):
 		if self._pos not in self.knownPos:
 			self.knownPos.append(self._pos)
 		
@@ -26,4 +32,3 @@ class Player:
 			self._pos = [newPos[0], newPos[1] + 1]
 		elif dir == "left" and self._pos[1] > 0:	
 			self._pos = [newPos[0], newPos[1] - 1]
-	

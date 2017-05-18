@@ -62,9 +62,11 @@ class Map:
 	#	[ N/A  ] [ 1, 0 ] [  N/A ]
 	def checkNear(self, pos):
 		adjacentSquares = self.getAdjacentTo(pos)
+		threats = [False, False]
 	
-		if any(self.getAt(dir).hasMonster() for dir in adjacentSquares):
-			print("A stench fills your lungs...")
-			
 		if any(self.getAt(dir).hasHole() for dir in adjacentSquares):
-		 	print("A suspicious breeze brushes your hair...")
+			threats[0] = True
+						
+		if any(self.getAt(dir).hasMonster() for dir in adjacentSquares):
+			threats[1] = True
+		return threats	 	

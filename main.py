@@ -1,6 +1,5 @@
-import space
 import player
-import input
+import ai
 import ui
 import map
 
@@ -8,8 +7,8 @@ import random
 w, h = 10, 10
 spaces = [[0 for i in range(w)] for j in range(h)]
 
-monsters = int(w / 3)
 holes = int(w / 2)
+monsters = int(w / 3)
 
 for i in range(holes):		#Spawn holes
 	spaces[random.randint(1, w - 2)][random.randint(1, h - 2)] = 1
@@ -22,7 +21,7 @@ spaces[start[0]][start[1]] = 8
 
 # Setup
 board = map.Map(w, h)
-p = player.Player()	
+p = ai.AIPlayer()	
 		
 # Initialisation
 board.initialise(spaces)
@@ -32,16 +31,8 @@ board.show(p)
 
 # Loop
 while p.getPos() != goal:
-	key = input.listenKey()
-	if key != "":
-		if key == "esc":
-			break
-		if key in ["up", "left", "down", "right"]:
-			ui.cls()
-			p.move(key)
-			board.show(p)
-			board.checkNear(p.getPos())
-		if key == "enter":
-			pass
-	key = ""
+	p.move(board)
+	ui.cls()
+	board.show(p)
+	ui.printThreats(p.getPos(), board)
 	

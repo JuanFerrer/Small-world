@@ -15,4 +15,14 @@ def listenKey():
 			return "left"
 		elif key == 77: #Right arrow
 			return "right"
-			
+
+def getPlayerMove():
+	key = listenKey()
+	if key != "":
+		if key == "esc":
+			# TODO: Finish
+			pass
+		if key in ["up", "left", "down", "right"]:
+			return key
+		if key == "enter":
+			pass
