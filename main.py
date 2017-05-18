@@ -34,12 +34,14 @@ board.show(p)
 while p.getPos() != goal:
 	key = input.listenKey()
 	if key != "":
-		ui.cls()
 		if key == "esc":
 			break
 		if key in ["up", "left", "down", "right"]:
+			ui.cls()
 			p.move(key)
-		key = ""
-	board.show(p)
-	board.checkNear(p.getPos())
+			board.show(p)
+			board.checkNear(p.getPos())
+		if key == "enter":
+			pass
+	key = ""
 	
