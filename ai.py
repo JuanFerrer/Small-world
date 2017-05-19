@@ -10,7 +10,7 @@ class AIPlayer(player.Player):
         self.maybeMonster = []
 
     def move(self, board):
-        time.sleep(2)
+        time.sleep(1)
         # We'll first look for a good movement
         dir = self.findBestMove(board)
         # Then call the base class method to act
@@ -27,29 +27,41 @@ class AIPlayer(player.Player):
         #
         #
         self.updateThreats(board)
+        dir = ""
+        for pos in self.notThreat:
+            if board.areAdjacent(pos, self.getPos()):
+                dir = self.dirFromPos(pos, self.getPos())
+                break
+
+        if dir == "":
+            dir = self.dirFromPos(self.knownPos[-1], self.getPos()) # Go back if you don't know where to go next
+
+        return dir
+
+    def dirFromPos(self, newPos, currPos):
+        if newPos[0] != currPos[0]:
+            return "up" if newPos[0] < currPos[0] else "down"
+        elif newPos[1] != currPos[1]:
+            return "left" if newPos[1] < currPos[1] else "right"
 
     def updateThreats(self, board):
         adjacents = board.getAdjacentTo(self.getPos())
         threats = board.checkNear(self.getPos())
+        # Check squares around
         for square in adjacents:
-            if square not in self.knownPos:
+            if square not in self.knownPos and square not in self.notThreat:
                 if threats[0] and square not in self.maybeHole:
                     self.maybeHole.append(square)
                 if threats[1] and square not in self.maybeMonster:
                     self.maybeMonster.append(square)
                 if not threats[0] and not threats[1]:
-                    if square in self.maybeHole:                 
+                    if square in self.maybeHole:
                         self.maybeHole.remove(square)
-                    if square in self.maybeMonster: 
+                    if square in self.maybeMonster:
                         self.maybeMonster.remove(square)
                     if square not in self.notThreat:
                         self.notThreat.append(square)
-
-
-
-    def areSharingAdjacentSquare(self, square1, square2, shared, board):
-        adjacentTo1 = board.getAdjacentTo(square1)
-        adjacentTo2 = board.getAdjacentTo(square2)
-
-        if shared in adjacentTo1 and shared in adjacentTo2:
-            return True
+        # Make sure I don't visit again the positions I know
+        for pos in self.knownPos:
+            if pos in self.notThreat:
+                self.notThreat.remove(pos)
