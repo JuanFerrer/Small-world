@@ -21,9 +21,9 @@ class AIPlayer(player.Player):
         #
         #   1 Update threat lists
         #
-        #   2 Move to square that is definitely not a threat
+        #   2 Move to closest square that is definitely not a threat
         #
-        #   3 If none, move back and repeat
+        #
         #
         #
         self.updateThreats(board)
@@ -36,6 +36,17 @@ class AIPlayer(player.Player):
         if dir == "":
             dir = self.dirFromPos(self.knownPos[-1], self.getPos()) # Go back if you don't know where to go next
 
+        # Look for closest non-threat square
+        closestDist = 100
+        closestSquare = []
+        for square in self.notThreat:
+            newDist = board.distBetween(square, self.getPos())
+            if  newDist < closestDist:
+                closestDist = newDist
+                closestSquare = square
+        
+        print(closestSquare)
+
         return dir
 
     def dirFromPos(self, newPos, currPos):
@@ -45,6 +56,8 @@ class AIPlayer(player.Player):
             return "left" if newPos[1] < currPos[1] else "right"
 
     def updateThreats(self, board):
+        if self.getPos() not in self.knownPos:
+            self.knownPos.append(self.getPos())
         adjacents = board.getAdjacentTo(self.getPos())
         threats = board.checkNear(self.getPos())
         # Check squares around

@@ -23,6 +23,7 @@ spaces[start[0]][start[1]] = 8
 # Setup
 board = map.Map(w, h)
 p = ai.AIPlayer()
+#p = player.Player()
 
 # Initialisation
 board.initialise(spaces)

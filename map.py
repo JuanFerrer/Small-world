@@ -57,6 +57,9 @@ class Map:
 
         return [n, e, s, w]
 
+    def distBetween(self, square1, square2):
+        return abs(abs(square1[0] - square2[0]) - abs(square1[1] - square2[1]))
+
     # Check squares around the player and print messages when appropriate
     #
     #	[ N/A  ] [-1, 0 ] [  N/A ]
