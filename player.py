@@ -18,17 +18,30 @@ class Player:
 		dir = input.getPlayerMove()
 		self.makeMove(dir)
 
+	def posFromDir(self, dir):
+		newPos = self._pos
+		if dir == "up" and self._pos[0] > 0:
+			return [newPos[0] - 1, newPos[1]]
+		elif dir == "down" and self._pos[0] < 9:
+			return [newPos[0] + 1, newPos[1]]
+		elif dir == "right" and self._pos[1] < 9:
+			return [newPos[0], newPos[1] + 1]
+		elif dir == "left" and self._pos[1] > 0:	
+			return [newPos[0], newPos[1] - 1]
+
+
 	def makeMove(self, dir):
 		if self._pos not in self.knownPos:
 			self.knownPos.append(self._pos)
+		self._pos = self.posFromDir(dir)
 		
-		newPos = self._pos
+		# newPos = self._pos
 			
-		if dir == "up" and self._pos[0] > 0:
-			self._pos = [newPos[0] - 1, newPos[1]]
-		elif dir == "down" and self._pos[0] < 9:
-			self._pos = [newPos[0] + 1, newPos[1]]
-		elif dir == "right" and self._pos[1] < 9:
-			self._pos = [newPos[0], newPos[1] + 1]
-		elif dir == "left" and self._pos[1] > 0:	
-			self._pos = [newPos[0], newPos[1] - 1]
+		# if dir == "up" and self._pos[0] > 0:
+		# 	self._pos = [newPos[0] - 1, newPos[1]]
+		# elif dir == "down" and self._pos[0] < 9:
+		# 	self._pos = [newPos[0] + 1, newPos[1]]
+		# elif dir == "right" and self._pos[1] < 9:
+		# 	self._pos = [newPos[0], newPos[1] + 1]
+		# elif dir == "left" and self._pos[1] > 0:	
+		# 	self._pos = [newPos[0], newPos[1] - 1]

@@ -1,5 +1,7 @@
 import player
 import time
+import astar
+import subjectivemap
 
 class AIPlayer(player.Player):
     def __init__(self):
@@ -23,9 +25,6 @@ class AIPlayer(player.Player):
         #
         #   2 Move to closest square that is definitely not a threat
         #
-        #
-        #
-        #
         self.updateThreats(board)
         dir = ""
         for pos in self.notThreat:
@@ -34,26 +33,39 @@ class AIPlayer(player.Player):
                 break
 
         if dir == "":
-            dir = self.dirFromPos(self.knownPos[-1], self.getPos()) # Go back if you don't know where to go next
+            closestSafeSquare = self.findClosestSafe(board)
+            dir = self.dirFromPos(closestSafeSquare, self.getPos()) # Search for the closest safe square
+            if self.isDangerousDir(dir): # Make sure you're not stepping over a dangerous square
+                # Need to find a way around the obstacle.
+                # Since we already know which safe square is the closest to us, it's probably
+                # best to implement A* algorithm to find quickest path through all known positions
+                nextMoves = astar.aStarSearch(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
+                    self.getPos(), closestSafeSquare)
+                dir = self.dirFromPos(nextMoves[0], self.getPos())
+
+        return dir
+    
+    def isDangerousDir(self, dir):
+        newPos = player.Player.posFromDir(dir)
+        return newPos not in self.maybeHole and newPos not in self.maybeMonster
+
 
         # Look for closest non-threat square
+    def findClosestSafe(self, board):
         closestDist = 100
-        closestSquare = []
+        closestSafeSquare = []
         for square in self.notThreat:
             newDist = board.distBetween(square, self.getPos())
             if  newDist < closestDist:
                 closestDist = newDist
-                closestSquare = square
-        
-        print(closestSquare)
+                closestSafeSquare = square
+        return closestSafeSquare
 
-        return dir
-
-    def dirFromPos(self, newPos, currPos):
-        if newPos[0] != currPos[0]:
-            return "up" if newPos[0] < currPos[0] else "down"
-        elif newPos[1] != currPos[1]:
-            return "left" if newPos[1] < currPos[1] else "right"
+    def dirFromPos(self, toPos, fromPos):
+        if toPos[0] != fromPos[0]:
+            return "up" if toPos[0] < fromPos[0] else "down"
+        elif toPos[1] != fromPos[1]:
+            return "left" if toPos[1] < fromPos[1] else "right"
 
     def updateThreats(self, board):
         if self.getPos() not in self.knownPos:
@@ -72,7 +84,7 @@ class AIPlayer(player.Player):
                         self.maybeHole.remove(square)
                     if square in self.maybeMonster:
                         self.maybeMonster.remove(square)
-                    if square not in self.notThreat:
+                    if square not in self.notThreat and square not in self.knownPos:
                         self.notThreat.append(square)
         # Make sure I don't visit again the positions I know
         for pos in self.knownPos:
