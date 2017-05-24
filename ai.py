@@ -16,7 +16,8 @@ class AIPlayer(player.Player):
         # We'll first look for a good movement
         dir = self.findBestMove(board)
         # Then call the base class method to act
-        player.Player.makeMove(self, dir)
+        #self.makeMove()
+        self.makeMove(dir)
 
     def findBestMove(self, board):
         #   Algorithm:
@@ -46,8 +47,8 @@ class AIPlayer(player.Player):
         return dir
     
     def isDangerousDir(self, dir):
-        newPos = player.Player.posFromDir(dir)
-        return newPos not in self.maybeHole and newPos not in self.maybeMonster
+        newPos = self.posFromDir(dir)
+        return newPos in self.maybeHole or newPos in self.maybeMonster
 
 
         # Look for closest non-threat square

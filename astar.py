@@ -1,45 +1,49 @@
 # http://www.redblobgames.com/pathfinding/a-star/implementation.html
 # https://en.wikipedia.org/wiki/A*_search_algorithm
-import Queue
+# https://gist.github.com/jamiees2/5531924
+
+class Node:
+    def __init__(self, value, pos):
+        self.value = value
+        self.pos = pos
+        self.parent = None
+        self.G = 0 # Cost of the path from Start to here
+        self.H = 0 # Heuristic from here to Goal
+    def moveCost(self):
+        return 0 if self.value == "." else 1
+
 import subjectivemap
 
-def aStarSearch(board, start, goal, ):
+def aStarSearch(board, start, goal):
     closedSet = set()
-    openSet = Queue.PriorityQueue()
-    openSet.put(start, 0)
-    cameFrom = set()
-    cameFrom[start] = None
-    gScore = set()
-    gScore[start] = 0
-    fScore = set()
-    fScore[start] = board.costBetween(start, goal)
-
-    while not openSet.empty():
-        current = openSet.get()
+    openSet = set()
+    current = start
+    openSet.add(current)
+    while openset:
+        current = min(openSet, key=lambda o:o.G + o.H)
 
         if current == goal:
-            break
+            path = []
+            while current.parent:
+                path.append(current)
+                current = current.parent
+            path.append(current)
+            return path[::-1]
 
-        closedSet.add(current)
-        
-        for neighbour in board.getAdjacentTo(current):
-            if neighbour in closedSet:
-                pass    # We've seen this already. Just ignore
-            newScore = gScore[current] + board.distBetween(current, neighbour)
-            if neighbour not in openSet:
-                openSet.put(neighbour)
-            elif newScore >= gScore[neighbour]:
-                pass # Not a better path
+    openSet.remove(current)
+    closedSet.add(current)
+    for node in board.getAdjacentTo(current):
+        if node in closedSet:
+            continue
+        if node in openSet:
+            newG = current.G + current.moveCost(node)
+            if node.G > newG:
+                node.G = newG
+                node.parent = current
+        else:
+            node.G = current.G + current.moveCost(node)
+            node.H = board.distBetween(node, goal)
+            node.parent = current
+            openSet.add(node)
 
-            cameFrom[neighbour] = current
-            gScore[neighbour] = newScore
-            fScore[neighbour] = gScore[neighbour] + board.costBetween(neighbour, goal)
-
-    return getFullPath(cameFrom, current)
-
-def getFullPath(cameFrom, current):
-    totalPath = [current]
-    while current in cameFrom: # Needs checking
-        current = cameFrom[current]
-        totalPath.append(current)
-    return totalPath
+    return []
