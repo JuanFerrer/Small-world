@@ -39,8 +39,8 @@ class AIPlayer(player.Player):
             if self.isDangerousDir(dir): # Make sure you're not stepping over a dangerous square
                 # Need to find a way around the obstacle.
                 # Since we already know which safe square is the closest to us, it's probably
-                # best to implement A* algorithm to find quickest path through all known positions
-                nextMoves = astar.aStarSearch(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
+                # best to implement best-first search algorithm to find quickest path through all known positions
+                nextMoves = astar.bestFirstSearch(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
                     self.getPos(), closestSafeSquare)
                 dir = self.dirFromPos(nextMoves[0], self.getPos())
 

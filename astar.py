@@ -2,48 +2,42 @@
 # https://en.wikipedia.org/wiki/A*_search_algorithm
 # https://gist.github.com/jamiees2/5531924
 
-class Node:
-    def __init__(self, value, pos):
-        self.value = value
-        self.pos = pos
-        self.parent = None
-        self.G = 0 # Cost of the path from Start to here
-        self.H = 0 # Heuristic from here to Goal
-    def moveCost(self):
-        return 0 if self.value == "." else 1
-
 import subjectivemap
+from subjectivemap import Node
 
-def aStarSearch(board, start, goal):
-    closedSet = set()
-    openSet = set()
-    current = start
-    openSet.add(current)
-    while openset:
-        current = min(openSet, key=lambda o:o.G + o.H)
 
-        if current == goal:
-            path = []
-            while current.parent:
-                path.append(current)
-                current = current.parent
-            path.append(current)
-            return path[::-1]
+def bestFirstSearch(board, startPos, goalPos):
+    # Create openList and closedList
+    openList = []
+    closedList = []
 
-    openSet.remove(current)
-    closedSet.add(current)
-    for node in board.getAdjacentTo(current):
-        if node in closedSet:
-            continue
-        if node in openSet:
-            newG = current.G + current.moveCost(node)
-            if node.G > newG:
-                node.G = newG
+    # Initialise start and push to openList
+    start = Node(None, board.distBetween(startPos, goalPos), startPos)
+    openList.append(start)
+
+    # Until goal is found
+    while len(openList) != 0:
+        current = openList[0]
+        openList.remove(current)
+        
+        if current.pos == goalPos:
+            return contructPath(current)
+        
+        for node in board.getAdjacentTo(current.pos):
+            node.score = board.distBetween(node.pos, goalPos)
+
+            if node.pos == goalPos or node not in closedList and node not in openList and board.getCostAt(node.pos) > 0:
                 node.parent = current
-        else:
-            node.G = current.G + current.moveCost(node)
-            node.H = board.distBetween(node, goal)
-            node.parent = current
-            openSet.add(node)
+                openList.append(node)
+        
+        closedList.append(current)
 
-    return []
+    return []   # Fail, no path found
+
+# Build path and return
+def constructPath(current):
+    path = []
+    while current != None:
+        path.append(current)
+        current = current.parent
+    return path.reverse()
