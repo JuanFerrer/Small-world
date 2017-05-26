@@ -41,6 +41,6 @@ class SubjectiveMap (map.Map):
         dirs = map.Map.getAdjacentTo(self, pos);
 
         return [Node(None, None, dirs[0]), \
-                Node(None, None, dirs[0]), \
-                Node(None, None, dirs[0]), \
-                Node(None, None, dirs[0])]
+                Node(None, None, dirs[1]), \
+                Node(None, None, dirs[2]), \
+                Node(None, None, dirs[3])]

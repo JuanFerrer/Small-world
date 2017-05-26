@@ -33,8 +33,13 @@ p.setPos(board.getStart())
 board.show(p)
 
 # Loop
+ui.pause()
 while p.getPos() != goal:
-    p.move(board)
-    ui.cls()
-    board.show(p)
-    ui.printThreats(p.getPos(), board)
+    if (p.move(board)):
+        ui.cls()
+        board.show(p)
+        ui.printThreats(p.getPos(), board)
+    else:
+        ui.suicide()
+        break
+ui.pause()

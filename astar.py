@@ -15,7 +15,7 @@ def bestFirstSearch(board, startPos, goalPos):
     openList.append(start)
 
     # Until goal is found
-    while len(openList) != 0:
+    while openList:
         current = openList[0]
         openList.remove(current)
         

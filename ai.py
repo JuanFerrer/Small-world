@@ -13,12 +13,12 @@ class AIPlayer(player.Player):
         self.nextMoves = []
 
     def move(self, board):
-        time.sleep(1)
+        time.sleep(0.1)
         # We'll first look for a good movement
         dir = self.findBestMove(board)
         # Then call the base class method to act
         #self.makeMove()
-        self.makeMove(dir)
+        return self.makeMove(dir)
 
     def findBestMove(self, board):
         #   Algorithm:
@@ -53,8 +53,9 @@ class AIPlayer(player.Player):
                         dir = self.dirFromPos(self.nextMoves.pop(0), self.getPos())
             # Don't know where to go :(
             if dir == "":
-                dir == "right" # Then choose the right
+                # dir == "right" # Then choose the right
                 # Probably wrong, needs fixing
+                pass
 
         return dir
     

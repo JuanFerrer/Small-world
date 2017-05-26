@@ -5,6 +5,9 @@ import os
 def cls():
     os.system('cls')
 
+def pause():
+	os.system("pause")
+
 def suicide():
 	print("There's no escape. You shoot yourself...");
 

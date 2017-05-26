@@ -31,9 +31,13 @@ class Player:
 
 
 	def makeMove(self, dir):
-		if self._pos not in self.knownPos:
-			self.knownPos.append(self._pos)
-		self._pos = self.posFromDir(dir)
+		if dir != "":
+			if self._pos not in self.knownPos:
+				self.knownPos.append(self._pos)
+			self._pos = self.posFromDir(dir)
+			return True
+		else:
+			return False
 		
 		# newPos = self._pos
 			
