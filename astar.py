@@ -36,7 +36,7 @@ def bestFirstSearch(board, startPos, goalPos):
 # Build path and return
 def constructPath(current):
     path = []
-    while current != None:
+    while current:
         path.append(current.pos)
         current = current.parent
     path.reverse()

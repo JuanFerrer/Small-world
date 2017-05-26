@@ -16,7 +16,8 @@ class Player:
 	# Move player in the specified direction. Can't move through diagonals
 	def move(self, board):
 		dir = input.getPlayerMove()
-		self.makeMove(dir)
+		self.makeMove(dir, board)
+		return True
 
 	def posFromDir(self, dir):
 		newPos = self._pos
@@ -30,14 +31,16 @@ class Player:
 			return [newPos[0], newPos[1] - 1]
 
 
-	def makeMove(self, dir):
+	def makeMove(self, dir, board):
 		if dir != "":
 			if self._pos not in self.knownPos:
 				self.knownPos.append(self._pos)
-			self._pos = self.posFromDir(dir)
-			return True
-		else:
-			return False
+			newPos = self.posFromDir(dir)
+			if newPos and newPos[0] >= 0 and newPos[0] < board.getHeight() \
+			and newPos[1] >= 0 and newPos[1] < board.getWidth():
+				self._pos = newPos
+				return True
+		return False
 		
 		# newPos = self._pos
 			
