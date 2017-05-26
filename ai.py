@@ -18,7 +18,7 @@ class AIPlayer(player.Player):
         dir = self.findBestMove(board)
         # Then call the base class method to act
         #self.makeMove()
-        return self.makeMove(dir)
+        return self.makeMove(dir, board)
 
     def findBestMove(self, board):
         #   Algorithm:
