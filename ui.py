@@ -5,6 +5,9 @@ import os
 def cls():
     os.system('cls')
 
+def suicide():
+	print("There's no escape. You shoot yourself...");
+
 
 def printThreats(pos, map):
 	threatsNear = map.checkNear(pos)

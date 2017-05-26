@@ -5,7 +5,6 @@
 import subjectivemap
 from subjectivemap import Node
 
-
 def bestFirstSearch(board, startPos, goalPos):
     # Create openList and closedList
     openList = []
@@ -21,7 +20,7 @@ def bestFirstSearch(board, startPos, goalPos):
         openList.remove(current)
         
         if current.pos == goalPos:
-            return contructPath(current)
+            return constructPath(current)
         
         for node in board.getAdjacentTo(current.pos):
             node.score = board.distBetween(node.pos, goalPos)
@@ -38,6 +37,7 @@ def bestFirstSearch(board, startPos, goalPos):
 def constructPath(current):
     path = []
     while current != None:
-        path.append(current)
+        path.append(current.pos)
         current = current.parent
-    return path.reverse()
+    path.reverse()
+    return path

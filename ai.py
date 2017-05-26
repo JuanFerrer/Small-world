@@ -10,6 +10,7 @@ class AIPlayer(player.Player):
         self.notThreat = []
         self.maybeHole = []
         self.maybeMonster = []
+        self.nextMoves = []
 
     def move(self, board):
         time.sleep(1)
@@ -28,21 +29,32 @@ class AIPlayer(player.Player):
         #
         self.updateThreats(board)
         dir = ""
-        for pos in self.notThreat:
-            if board.areAdjacent(pos, self.getPos()):
-                dir = self.dirFromPos(pos, self.getPos())
-                break
+        # Do we have moves planned?
+        if self.nextMoves:
+            dir = self.dirFromPos(self.nextMoves.pop(0), self.getPos())
 
-        if dir == "":
-            closestSafeSquare = self.findClosestSafe(board)
-            dir = self.dirFromPos(closestSafeSquare, self.getPos()) # Search for the closest safe square
-            if self.isDangerousDir(dir): # Make sure you're not stepping over a dangerous square
-                # Need to find a way around the obstacle.
-                # Since we already know which safe square is the closest to us, it's probably
-                # best to implement best-first search algorithm to find quickest path through all known positions
-                nextMoves = astar.bestFirstSearch(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
-                    self.getPos(), closestSafeSquare)
-                dir = self.dirFromPos(nextMoves[0], self.getPos())
+        else:
+            for pos in self.notThreat:
+                if board.areAdjacent(pos, self.getPos()):
+                    dir = self.dirFromPos(pos, self.getPos())
+                    break
+
+            if dir == "":
+                closestSafeSquare = self.findClosestSafe(board)
+                dir = self.dirFromPos(closestSafeSquare, self.getPos()) # Search for the closest safe square
+                if self.isDangerousDir(dir): # Make sure you're not stepping over a dangerous square
+                    # Need to find a way around the obstacle.
+                    # Since we already know which safe square is the closest to us, it's probably
+                    # best to implement best-first search algorithm to find quickest path through all known positions
+                    self.nextMoves = astar.bestFirstSearch(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
+                        self.getPos(), closestSafeSquare)
+                    if self.nextMoves:                   
+                        del self.nextMoves[0]  # Deleting origin
+                        dir = self.dirFromPos(self.nextMoves.pop(0), self.getPos())
+            # Don't know where to go :(
+            if dir == "":
+                dir == "right" # Then choose the right
+                # Probably wrong, needs fixing
 
         return dir
     

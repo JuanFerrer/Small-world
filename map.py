@@ -49,9 +49,10 @@ class Map:
 
     # Get a list with all adjacent squares. Diagonals don't count as adjacent
     def getAdjacentTo(self, pos):
-        n = [pos[0] - 1, pos[1]] if pos[0] > 0 else [pos[0] + 1, pos[1]]  # s
-        e = [pos[0], pos[1] + 1] if pos[1] < self._width - \
-            1 else [pos[0], pos[1] - 1]  # w
+        n = [pos[0] - 1, pos[1]] if pos[0] > 0 \
+            else [pos[0] + 1, pos[1]]  # s
+        e = [pos[0], pos[1] + 1] if pos[1] < self._width - 1 \
+            else [pos[0], pos[1] - 1]  # w
         s = [pos[0] + 1, pos[1]] if pos[0] < self._height - 1 else n
         w = [pos[0], pos[1] - 1] if pos[1] > 0 else e
 

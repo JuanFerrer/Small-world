@@ -32,13 +32,15 @@ class SubjectiveMap (map.Map):
 
     # Get a list of visited adjacent squares
     def getAdjacentTo(self, pos):
-        n = [pos[0] - 1, pos[1]] if pos[0] > 0 else [pos[0] + 1, pos[1]]  # s
-        e = [pos[0], pos[1] + 1] if pos[1] < self._width - \
-            1 else [pos[0], pos[1] - 1]  # w
-        s = [pos[0] + 1, pos[1]] if pos[0] < self._height - 1 else n
-        w = [pos[0], pos[1] - 1] if pos[1] > 0 else e
+        # n = [pos[0] - 1, pos[1]] if pos[0] > 0 \
+        #     else [pos[0] + 1, pos[1]]  # s
+        # e = [pos[0], pos[1] + 1] if pos[1] < self._width - 1 \
+        #     else [pos[0], pos[1] - 1]  # w
+        # s = [pos[0] + 1, pos[1]] if pos[0] < self._height - 1 else n
+        # w = [pos[0], pos[1] - 1] if pos[1] > 0 else e
+        dirs = map.Map.getAdjacentTo(self, pos);
 
-        return [Node(None, None, n), \
-                Node(None, None, e), \
-                Node(None, None, s), \
-                Node(None, None, w)]
+        return [Node(None, None, dirs[0]), \
+                Node(None, None, dirs[0]), \
+                Node(None, None, dirs[0]), \
+                Node(None, None, dirs[0])]

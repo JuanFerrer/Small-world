@@ -16,8 +16,9 @@ for i in range(monsters):  # Spawn monsters
     spaces[random.randint(1, w - 2)][random.randint(1, h - 2)] = 2
 goal = [random.randint(0, w - 1), random.randint(0, h - 1)]
 spaces[goal[0]][goal[1]] = 4
-# Or should it be [0, 0]?
-start = [random.randint(0, w - 1), random.randint(0, h - 1)]
+# Or should it be [9, 0]?
+#start = [random.randint(0, w - 1), random.randint(0, h - 1)]
+start = [9, 0]
 spaces[start[0]][start[1]] = 8
 
 # Setup
