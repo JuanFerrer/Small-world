@@ -42,4 +42,8 @@ while p.getPos() != goal:
     else:
         ui.suicide()
         break
+if (p.getPos() == goal):
+    ui.cls()
+    board.show(p)
+    ui.reachedGoal()
 ui.pause()

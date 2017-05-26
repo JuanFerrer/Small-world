@@ -9,8 +9,10 @@ def pause():
 	os.system("pause")
 
 def suicide():
-	print("There's no escape. You shoot yourself...");
+	print("There's no escape. You shoot yourself...")
 
+def reachedGoal():
+	print("Congratulations! You found the exit!")
 
 def printThreats(pos, map):
 	threatsNear = map.checkNear(pos)
