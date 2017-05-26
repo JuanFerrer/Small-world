@@ -1,6 +1,6 @@
 import player
 import time
-import astar
+import search
 import subjectivemap
 
 class AIPlayer(player.Player):
@@ -47,7 +47,7 @@ class AIPlayer(player.Player):
                         # Need to find a way around the obstacle.
                         # Since we already know which safe square is the closest to us, it's probably
                         # best to implement best-first search algorithm to find quickest path through all known positions
-                        self.nextMoves = astar.bestFirstSearch(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
+                        self.nextMoves = search.searchAlgorithm(subjectivemap.SubjectiveMap(board.getWidth(), board.getHeight(), self.knownPos),
                             self.getPos(), closestSafeSquare)
                         if self.nextMoves:                   
                             del self.nextMoves[0]  # Deleting origin

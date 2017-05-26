@@ -5,6 +5,13 @@
 import subjectivemap
 from subjectivemap import Node
 
+def searchAlgorithm(board, startPos, goalPos):
+    # return breadthFirstSearch(board, startPos, goalPos)
+    # return depthFirstSearch(board, startPos, goalPos)
+    return bestFirstSearch(board, startPos, goalPos)
+    # return dijkstrasSearch(board, startPos, goalPos)
+    # return aStarSearch(board, startPos, goalPos)
+
 def bestFirstSearch(board, startPos, goalPos):
     # Create openList and closedList
     openList = []
