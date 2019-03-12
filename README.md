@@ -1,4 +1,4 @@
-## Small World
+## Small World (Wumpus World)
 
 This is meant to be mainly a learning experiment with Python. I had scripted in Python before, but never written an actual program with classes and stuff.
 
